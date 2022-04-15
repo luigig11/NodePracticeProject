@@ -1,5 +1,5 @@
 import { Batch } from '../../interfaces/batch';
-import {addBatch, getBatch, getBatches, deleteBatch} from '../../model/batches.model';
+import {addBatch, getBatch, getBatches, deleteBatch, updateBatch} from '../../model/batches.model';
 
 function httpGetBatches(_: any, res: any): any {
     // console.log(req);
@@ -9,7 +9,7 @@ function httpGetBatches(_: any, res: any): any {
 
 function httpGetBatch(req: any, res: any): any {
     // console.log(req);
-    const batch: Batch | string = getBatch(req.params.batchCode);
+    const batch: Batch | undefined = getBatch(req.params.batchCode);
     return res.status(200).json(batch);
 }
 
@@ -24,9 +24,15 @@ function httpDeleteBatch(req:any, res: any) {
     return res.status(200).json(batches);
 }
 
+function httpUpdateBatch(req:any, res: any) {
+    const batch: Batch | undefined = updateBatch(req.body);
+    return res.status(200).json(batch);
+}
+
 export {
     httpGetBatch,
     httpGetBatches,
     httpAddBatch,
-    httpDeleteBatch
+    httpDeleteBatch,
+    httpUpdateBatch
 }

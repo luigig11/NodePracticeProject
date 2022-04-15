@@ -13,21 +13,21 @@ function getBatches(): Batch[] {
     return batches;
 }
 
-function getBatch(code: string): Batch | string {
+function getBatch(code: string): Batch | undefined {
 
     let selectedBatch: Batch | undefined = batches.find(batch => {
-        
+
         if (batch.batchCode === code) {
             return true;
         }
         return false;
-        
+
     });
 
     // console.log('selected batch', selectedBatch);
 
     if (!selectedBatch) {
-        return 'lote no existente'
+        return undefined;
     }
 
     return selectedBatch;
@@ -46,9 +46,29 @@ function deleteBatch(code: string): Batch[] {
     return batches;
 }
 
+function updateBatch(batch: Batch): Batch | undefined {
+    
+    //validar que exista el batch que solicitan actualizar
+    if (!getBatch(batch.batchCode)) {
+        return undefined;
+    }
+    //encontrar el indice del batch
+    let batchIndex: number = batches.findIndex(memoryBatch => memoryBatch.batchCode === batch.batchCode);
+    //actualizar el batch
+    batches[batchIndex] = {
+        ...batches[batchIndex],
+        batchDateStart: batch.batchDateStart,
+        batchDateEnd: batch.batchDateEnd,
+    }
+
+    return batches[batchIndex];
+
+}
+
 export {
     getBatch,
     getBatches,
     addBatch,
-    deleteBatch
+    deleteBatch,
+    updateBatch
 }

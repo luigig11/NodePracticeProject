@@ -1,11 +1,14 @@
 import express from 'express';
-import {batchRouter} from './routes/batches/batches.router';
+
+import {api} from './routes/api';
 
 const app = express();
 
+//TODO: ADD CORS MIDDLEWARE
+
 app.use(express.json());
 
-app.use('/v1', batchRouter);
+app.use('/v1', api);
 
 //Borrar este endpoint en cuanto deje de probar
 /* app.get('/', (req, res) => {

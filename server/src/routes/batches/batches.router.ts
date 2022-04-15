@@ -1,12 +1,13 @@
-import {httpAddBatch, httpGetBatch, httpGetBatches, httpDeleteBatch} from './batches.controller';
+import {httpAddBatch, httpGetBatch, httpGetBatches, httpDeleteBatch, httpUpdateBatch} from './batches.controller';
 import {Router} from 'express';
 
 const batchRouter = Router();
 
-batchRouter.get('/batch/:batchCode', httpGetBatch);
-batchRouter.get('/batches', httpGetBatches);
-batchRouter.post('/batch', httpAddBatch);
-batchRouter.delete('/batch/:batchCode',httpDeleteBatch );
+batchRouter.get('/:batchCode', httpGetBatch);
+batchRouter.get('/', httpGetBatches);
+batchRouter.post('/', httpAddBatch);
+batchRouter.delete('/:batchCode',httpDeleteBatch );
+batchRouter.put('/',httpUpdateBatch);
 
 export {
     batchRouter
