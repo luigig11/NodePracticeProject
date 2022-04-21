@@ -5,8 +5,12 @@ import {api} from './routes/api';
 const app = express();
 
 //TODO: ADD CORS MIDDLEWARE
+//TODO: ADD LOGS MIDDLEWARE
 
 app.use(express.json());
+
+//TODO: descomentar y usar el middleware para servir archivos estaticos desde el servidor
+// app.use(express.static(path.join(ruta)));
 
 app.use('/v1', api);
 
