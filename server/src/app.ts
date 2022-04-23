@@ -1,13 +1,19 @@
 import express from 'express';
 
 import {api} from './routes/api';
+import {httpLogger} from './httpLogger';
 
 const app = express();
 
 //TODO: ADD CORS MIDDLEWARE
-//TODO: ADD LOGS MIDDLEWARE
+
+//TODO: ADD LOGS MIDDLEWARE - DONE!
+//Logger Http usando morgan y winston: https://sematext.com/blog/node-js-logging/
+app.use(httpLogger)
 
 app.use(express.json());
+
+
 
 //TODO: descomentar y usar el middleware para servir archivos estaticos desde el servidor
 // app.use(express.static(path.join(ruta)));
