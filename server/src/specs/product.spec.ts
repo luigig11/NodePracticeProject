@@ -8,7 +8,7 @@ import {
     updateProduct
 } from '../model/products.model';
 
-import { products } from '../fixtures/product.fixture'
+import { products } from '../fixtures/data.fixture'
 
 describe('Get product', () => {
 
@@ -97,8 +97,8 @@ describe('Add Products', () => {
         it('should add a new product', () => {
             //TODO: se esta modificando la base de datos testBD por lo que no es necesario este paso intermedio
             const productsList = addProduct(product, testBD);
-            console.log('Add Product , testBD.length: ', testBD.length);
-            console.log('Add Product 2, products.length: ', products.length);
+            // console.log('Add Product , testBD.length: ', testBD.length);
+            // console.log('Add Product 2, products.length: ', products.length);
             expect(productsList[productsList.length - 1].productCode).to.equal(product.productCode);
             expect(productsList[productsList.length - 1].factoryID).to.equal(product.factoryID);
             expect(productsList[productsList.length - 1].productPrice).to.equal(product.productPrice);
@@ -110,12 +110,12 @@ describe('Add Products', () => {
 describe('Delete Product', () => {
     const tests = 'L001-001';
     const testBD = Object.create(products);
-    console.log('Delete Product, testBD.length: ', testBD.length);
+    // console.log('Delete Product, testBD.length: ', testBD.length);
 
     it(`should delete the product ${tests}`, () => {
         //TODO: se esta modificando la base de datos testBD por lo que no es necesario este paso intermedio
         const productsList = deleteProduct(tests, testBD);
-        console.log('Delete Product 2, testBD.length: ', testBD.length);
+        // console.log('Delete Product 2, testBD.length: ', testBD.length);
         expect(productsList.length).to.equal(2);
         productsList.forEach(element => {
             expect(element.productCode).to.not.equal(tests);

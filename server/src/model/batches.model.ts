@@ -1,19 +1,19 @@
 import { Batch } from './../interfaces/batch';
 
-const batch: Batch = {
+/* const batch: Batch = {
     batchCode: 'LT-001',
     amountProducts: 10
 };
 
 const batches: Batch[] = [
     batch,
-]
+] */
 
-function getBatches(): Batch[] {
+function getBatches(batches: Batch[]): Batch[] {
     return batches;
 }
 
-function getBatch(code: string): Batch | undefined {
+function getBatch(code: string, batches: Batch[]): Batch | undefined {
 
     let selectedBatch: Batch | undefined = batches.find(batch => {
 
@@ -33,23 +33,24 @@ function getBatch(code: string): Batch | undefined {
     return selectedBatch;
 }
 
-function addBatch(newBatch: Batch): Batch {
+function addBatch(newBatch: Batch, batches: Batch[]): Batch {
 
     batches.push(newBatch);
     return newBatch;
 
 }
 
-function deleteBatch(code: string): Batch[] {
+function deleteBatch(code: string, batches: Batch[]): Batch[] {
+    //TODO: esta no es una funcion pura. Copiar el estado, modifcar la copia y retornarlo para hacerlo pure function
     let batchIndex: number = batches.findIndex(batch => batch.batchCode === code);
     batches.splice(batchIndex, 1);
     return batches;
 }
 
-function updateBatch(batch: Batch): Batch | undefined {
+function updateBatch(batch: Batch, batches: Batch[]): Batch | undefined {
     
     //validar que exista el batch que solicitan actualizar
-    if (!getBatch(batch.batchCode)) {
+    if (!getBatch(batch.batchCode, batches)) {
         return undefined;
     }
     //encontrar el indice del batch

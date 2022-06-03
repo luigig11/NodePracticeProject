@@ -1,3 +1,4 @@
+import { Batch } from '../interfaces/batch';
 import { Product } from '../interfaces/product';
 
 export const products: Product[] = [
@@ -29,3 +30,25 @@ export const products: Product[] = [
     }
 
 ]
+
+export const batches: Batch[] = [
+    {
+        batchCode: 'LT-001',
+        amountProducts: 10
+    },
+    {
+        batchCode: 'LT-002',
+        amountProducts: 10
+    },
+    {
+        batchCode: 'LT-003',
+        amountProducts: 5,
+        batchDateStart: new Date()
+    },
+    {
+        batchCode: 'LT-004',
+        amountProducts: 5,
+        batchDateEnd: new Date('12/05/2022')
+    }
+]
+

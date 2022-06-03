@@ -5,6 +5,8 @@
   "main": "src/server.ts",
   "scripts": {
     "test": "mocha",
+    "test-batch": "mocha src/specs/batch.spec.ts",
+    "test-product": "mocha product.spec.ts",
     "test-watch": "mocha ----watch",
     "start": "ts-node-dev --respawn src/server.ts"
   },
