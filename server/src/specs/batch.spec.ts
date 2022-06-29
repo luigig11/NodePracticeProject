@@ -2,7 +2,7 @@ import {expect} from 'chai';
 
 import { batches } from '../fixtures/data.fixture';
 
-import { addBatch, deleteBatch, getBatch, getBatches, updateBatch } from '../model/batches.model';
+import { addBatch, deleteBatch, getBatch, getBatches, updateBatch } from '../model/batches/batches.model';
 
 //TODO: AVERIGUAR COMO CORRER SOLO UN ARCHIVO DE TEST
 describe('Get Batch', () => {

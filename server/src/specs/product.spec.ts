@@ -6,7 +6,7 @@ import {
     getProduct,
     getProducts,
     updateProduct
-} from '../model/products.model';
+} from '../model/products/products.model';
 
 import { products } from '../fixtures/data.fixture'
 
@@ -19,11 +19,11 @@ describe('Get product', () => {
 
         if (index === 0) {
             it(`Should find the product ${item}`, () => {
-                expect(getProduct(item, testBD)).to.exist;
+                expect(getProduct(item)).to.exist;
             });
         } else {
             it(`should not find the product ${item}`, () => {
-                expect(getProduct(item, testBD)).to.be.undefined;
+                expect(getProduct(item)).to.be.undefined;
             });
         }
     });
@@ -36,16 +36,16 @@ describe('Get products', () => {
     const testBD = products;
 
     it('Should return a list of products', () => {
-        expect(getProducts(testBD)).to.be.an('array');
+        expect(getProducts()).to.be.an('array');
     });
 
     it(`Should return a list of ${testBD.length}`, () => {
-        expect(getProducts(testBD).length).to.be.equal(3);
+        expect(getProducts().length).to.be.equal(3);
     });
 
     tests.forEach((item, index) => {
         it(`should have the id ${item}`, () => {
-            expect(getProducts(testBD)[index].productCode).to.be.equal(item);
+            expect(getProducts()[index].productCode).to.be.equal(item);
         });
     });
 
@@ -96,7 +96,7 @@ describe('Add Products', () => {
     tests.forEach(product => {
         it('should add a new product', () => {
             //TODO: se esta modificando la base de datos testBD por lo que no es necesario este paso intermedio
-            const productsList = addProduct(product, testBD);
+            const productsList = addProduct(product);
             // console.log('Add Product , testBD.length: ', testBD.length);
             // console.log('Add Product 2, products.length: ', products.length);
             expect(productsList[productsList.length - 1].productCode).to.equal(product.productCode);
@@ -114,7 +114,7 @@ describe('Delete Product', () => {
 
     it(`should delete the product ${tests}`, () => {
         //TODO: se esta modificando la base de datos testBD por lo que no es necesario este paso intermedio
-        const productsList = deleteProduct(tests, testBD);
+        const productsList = deleteProduct(tests);
         // console.log('Delete Product 2, testBD.length: ', testBD.length);
         expect(productsList.length).to.equal(2);
         productsList.forEach(element => {
@@ -157,7 +157,7 @@ describe('Update Product', () => {
 
     tests.forEach((testCase, index) => {
         it('Should update the product', () => {
-            const updatedProduct = updateProduct(testCase, testBD);
+            const updatedProduct = updateProduct(testCase);
             expect(testBD[index].productCode).to.equal(updatedProduct.productCode);
             expect(testBD[index].factoryID).to.equal(updatedProduct.factoryID);
             expect(testBD[index].batchCode).to.equal(updatedProduct.batchCode);

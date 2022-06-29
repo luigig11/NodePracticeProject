@@ -1,6 +1,6 @@
 import { Batch } from '../../interfaces/batch';
 import {logger} from '../../logger';
-import {addBatch, getBatch, getBatches, deleteBatch, updateBatch} from '../../model/batches.model';
+import {addBatch, getBatch, getBatches, deleteBatch, updateBatch} from '../../model/batches/batches.model';
 
 function httpGetBatches(req: any, res: any): any {
     logger.debug(`this is the ${req.url}`);
@@ -22,7 +22,7 @@ function httpAddBatch(req: any, res: any): any {
 
 function httpDeleteBatch(req:any, res: any) {
     logger.debug(`this is the ${req.url}`);
-    const batches: Batch[] = deleteBatch(req.params.batchCode);
+    const batches: Batch = deleteBatch(req.params.batchCode);
     return res.status(200).json(batches);
 }
 
