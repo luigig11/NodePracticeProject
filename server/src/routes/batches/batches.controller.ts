@@ -1,35 +1,95 @@
 import { Batch } from '../../interfaces/batch';
-import {logger} from '../../logger';
-import {addBatch, getBatch, getBatches, deleteBatch, updateBatch} from '../../model/batches/batches.model';
+import { logger } from '../../logger';
+import { Error, Sucess } from '../../network/response';
+
+import {
+    addBatch,
+    getBatch,
+    getBatches,
+    deleteBatch,
+    updateBatch
+} from '../../model/batches/batches.model';
 
 function httpGetBatches(req: any, res: any): any {
-    logger.debug(`this is the ${req.url}`);
-    const batches: Batch[] = getBatches();
-    return res.status(200).json(batches);
+
+    try {
+
+        logger.debug(`this is the ${req.url}`);
+        const batches: Batch[] = getBatches();
+        if (!batches) return Error(req, res, 'No batches were found');
+        return Sucess(req, res, batches, 200);
+
+    } catch (error) {
+        //TODO: volver al articolo de semaText para crear un errorHandler
+        return Error(req, res, error);
+
+    }
+
 }
 
 function httpGetBatch(req: any, res: any): any {
-    logger.debug(`this is the ${req.url}`);
-    const batch: Batch | undefined = getBatch(req.params.batchCode);
-    return res.status(200).json(batch);
+
+    try {
+
+        logger.debug(`this is the ${req.url}`);
+        const batch: Batch | undefined = getBatch(req.params.batchCode);
+        if (!batch) return Error(req, res, 'The batch was not found');
+        return Sucess(req, res, batch, 200);
+
+    } catch (error) {
+        //TODO: volver al articolo de semaText para crear un errorHandler
+        return Error(req, res, error);
+    }
+
 }
 
 function httpAddBatch(req: any, res: any): any {
-    logger.debug(`this is the ${req.url}`);
-    const newBAtch : Batch = addBatch(req.body);
-    return res.status(200).json(newBAtch);
+
+    try {
+
+        logger.debug(`this is the ${req.url}`);
+        const newBAtch: Batch = addBatch(req.body);
+        return Sucess(req, res, newBAtch, 200);
+        
+    } catch (error) {
+        //TODO: volver al articolo de semaText para crear un errorHandler
+        return Error(req, res, error);
+    }
+    
 }
 
-function httpDeleteBatch(req:any, res: any) {
-    logger.debug(`this is the ${req.url}`);
-    const batches: Batch = deleteBatch(req.params.batchCode);
-    return res.status(200).json(batches);
+function httpDeleteBatch(req: any, res: any) {
+
+    try {
+
+        logger.debug(`this is the ${req.url}`);
+        if(!getBatch(req.params.batchCode))
+            return Error(req, res, 'The batch was not found');
+        const deletedBatch: Batch = deleteBatch(req.params.batchCode);
+        return Sucess(req, res, deletedBatch, 200);
+
+    } catch (error) {
+        //TODO: volver al articolo de semaText para crear un errorHandler
+        return Error(req, res, error);
+    }
+    
 }
 
-function httpUpdateBatch(req:any, res: any) {
-    logger.debug(`this is the ${req.url}`);
-    const batch: Batch | undefined = updateBatch(req.body);
-    return res.status(200).json(batch);
+function httpUpdateBatch(req: any, res: any) {
+
+    try {
+
+        logger.debug(`this is the ${req.url}`);
+        if(!getBatch(req.params.batchCode))
+            return Error(req, res, 'The batch was not found');
+        const updatedBatch: Batch | undefined = updateBatch(req.body);
+        return Sucess(req, res, updatedBatch, 200);
+
+    } catch (error) {
+        //TODO: volver al articolo de semaText para crear un errorHandler
+        return Error(req, res, error);
+    }
+    
 }
 
 export {

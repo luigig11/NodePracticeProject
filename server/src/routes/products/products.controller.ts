@@ -30,6 +30,7 @@ function httpGetProducts(req: any, res: any) {
         
         logger.debug(`Initiating operation at ${req.url} route`);
         const products: Product[] = getProducts();
+        if(!products) return Error(req, res, 'No products were found');
         return Sucess(req, res, products, 200);
 
     } catch (error) {
