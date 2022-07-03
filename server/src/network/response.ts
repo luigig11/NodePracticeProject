@@ -10,6 +10,7 @@ export const Sucess = (req: any, res: any, message: any = '', status: any) => {
 }
 
 export const Error = (req: any, res: any, details: any, message: any='Internal Server Error', status: any = 500) => {
+    //TODO: el parametro req debe apuntar a la url del metodo donde revienta. Ahorita solo es un objeto que no indica nada
     logger.error(`Operation at route ${req} failed. Response error: ${details}`);
     res.status(status).send({
         error: true,

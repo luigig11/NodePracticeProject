@@ -80,7 +80,7 @@ function httpUpdateBatch(req: any, res: any) {
     try {
 
         logger.debug(`this is the ${req.url}`);
-        if(!getBatch(req.params.batchCode))
+        if(!getBatch(req.body.batchCode))
             return Error(req, res, 'The batch was not found');
         const updatedBatch: Batch | undefined = updateBatch(req.body);
         return Sucess(req, res, updatedBatch, 200);

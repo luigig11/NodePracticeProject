@@ -46,8 +46,9 @@ function httpAddProduct(req: any, res: any) {
 
         //NOTA: en este metodo no valido si el objeto product tiene la informacion (campos) correcta ya que de eso se deberia encargar el frontend
         //antes de mandar la peticion al backend
+        //TODO: esta URL solo imprime el parametro final (ej: /L001-002) componet para que imprima el formato correcto
         logger.debug(`Initiating operation at ${req.url} route`);
-        const newProduct: Product[] = addProduct(req.body);
+        const newProduct: Product = addProduct(req.body);
         return Sucess(req, res, newProduct, 200);
 
     } catch (error) {
@@ -79,7 +80,7 @@ function httpUpdateProduct(req: any, res: any) {
     try {
 
         logger.debug(`Initiating operation at ${req.url} route`);
-        if (!getProduct(req.params.productCode)) 
+        if (!getProduct(req.body.productCode)) 
             return Error(req, res, 'Product not found');
         const product: Product = updateProduct(req.body)!;
         return Sucess(req, res, product, 200);

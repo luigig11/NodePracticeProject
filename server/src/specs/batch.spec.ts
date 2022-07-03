@@ -1,6 +1,8 @@
 import {expect} from 'chai';
 
-import { batches } from '../fixtures/data.fixture';
+// EL ARCHIVO "data.fixture" NO TIENE NINGUNA UTILIDAD. SE ESTUDIARA A FUTURO SI ES VIABLE USARLO PARA SEMBRAR DATOS DE PRUEBAS UNITARIAS
+// import { batches } from '../fixtures/data.fixture';
+import {batches as dummyBatches} from '../store/dummyStore';
 
 import { addBatch, deleteBatch, getBatch, getBatches, updateBatch } from '../model/batches/batches.model';
 
@@ -12,11 +14,11 @@ describe('Get Batch', () => {
 
         if (index === 3) {
             it('should not find the product', () => {
-                expect(getBatch(code, batches)).to.be.undefined;
+                expect(getBatch(code)).to.be.undefined;
             });
         } else {
             it('should find the product', () => {
-                const batch = getBatch(code, batches);
+                const batch = getBatch(code);
                 expect(batch).to.exist;
                 expect(batch!.batchCode).equal(code);
             });
@@ -28,7 +30,7 @@ describe('Get Batch', () => {
 
 describe('Get Batches', () => {
     const test = ['LT-001', 'LT-002', 'LT-003', 'LT-004'];
-    const testBD = getBatches(batches);
+    const testBD = getBatches();
 
     it('should be an array of four elements', () => {
         //TODO: este caso es medio sin sentido porque todo lo que hago es retornar la BD 
@@ -65,11 +67,11 @@ describe('Add Batches', () => {
             amountProducts: 10,
         },
     ]
-    const testBD = [...batches];
+    const testBD = [...dummyBatches];
 
     tests.forEach(batch => {
         it('should add a new product', () => {
-            addBatch(batch, testBD);
+            addBatch(batch);
             expect(testBD[testBD.length - 1].batchCode).to.equal(batch.batchCode);
             expect(testBD[testBD.length - 1].amountProducts).to.equal(batch.amountProducts);
             expect(testBD[testBD.length - 1].batchDateStart).to.equal(batch.batchDateStart);
@@ -80,13 +82,13 @@ describe('Add Batches', () => {
 
 describe('Delete Batch', () => {
     const tests = 'LT-004';
-    const testBD = [...batches];
+    const testBD = [...dummyBatches];
 
     it(`should delete the batch ${tests}`, () => {
         //TODO: cuando se cambie a pure function se cambia este tests
-        deleteBatch(tests, testBD);
-        expect(testBD.length).to.equal(3);
-        testBD.forEach(element => {
+        deleteBatch(tests);
+        expect(dummyBatches.length).to.equal(testBD.length - 1);
+        dummyBatches.forEach(element => {
             expect(element.batchCode).to.not.equal(tests);
         });
     });
@@ -112,11 +114,11 @@ describe('Update Batch', () => {
             batchDateStart: new Date('25/05/2022')
         },
     ];
-    const testBD = [...batches];
+    const testBD = [...dummyBatches];
 
     tests.forEach((batch, index) => {
         it(`Should update the product ${batch.batchCode}`, () => {
-            const newBatch = updateBatch(batch, testBD);
+            const newBatch = updateBatch(batch);
             expect(newBatch?.batchCode).to.equal(testBD[index].batchCode);
             expect(newBatch?.amountProducts).to.equal(testBD[index].amountProducts);
             expect(newBatch?.batchDateStart).to.equal(testBD[index].batchDateStart);

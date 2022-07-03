@@ -15,7 +15,7 @@ function getProducts(): Product[] {
     return getList();
 }
 
-function addProduct(product: Product): Product[] {
+function addProduct(product: Product): Product {
     return add(product);
 }
 

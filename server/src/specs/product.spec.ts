@@ -8,12 +8,13 @@ import {
     updateProduct
 } from '../model/products/products.model';
 
-import { products } from '../fixtures/data.fixture'
+// EL ARCHIVO "data.fixture" NO TIENE NINGUNA UTILIDAD. SE ESTUDIARA A FUTURO SI ES VIABLE USARLO PARA SEMBRAR DATOS DE PRUEBAS UNITARIAS
+// import { products } from '../fixtures/data.fixture'
+import {products as dummyProducts} from '../store/dummyStore';
 
 describe('Get product', () => {
 
     const tests: string[] = ['L001-001', 'L001-004', 'L001-005'];
-    const testBD = products;
 
     tests.forEach((item, index) => {
 
@@ -33,7 +34,7 @@ describe('Get product', () => {
 describe('Get products', () => {
 
     const tests = ['L001-001', 'L001-002', 'L001-003'];
-    const testBD = products;
+    const testBD = Object.create(dummyProducts);
 
     it('Should return a list of products', () => {
         expect(getProducts()).to.be.an('array');
@@ -91,41 +92,45 @@ describe('Add Products', () => {
             },
         },
     ];
-    const testBD = Object.create(products);
+    //El problema aqui es que  la BD de prueba cambia porque se insertan datos y podria afectar mis otras pruebas. 
+    //En el futuro deberia refactorziar para que estas pruebas no sean interdependientes
+    //crear un objeto nuevo simula otra BD pero el problema es que el product.store es el que decide donde buscar los datos
+    //mas adelante se debe refactorizar con las variables de ambiente para que las pruebas unitarias se ejecuten en ambientes aislados
+    // const testBD = Object.create(dummyProducts);
 
     tests.forEach(product => {
         it('should add a new product', () => {
             //TODO: se esta modificando la base de datos testBD por lo que no es necesario este paso intermedio
-            const productsList = addProduct(product);
+            const addedProduct = addProduct(product);
             // console.log('Add Product , testBD.length: ', testBD.length);
             // console.log('Add Product 2, products.length: ', products.length);
-            expect(productsList[productsList.length - 1].productCode).to.equal(product.productCode);
-            expect(productsList[productsList.length - 1].factoryID).to.equal(product.factoryID);
-            expect(productsList[productsList.length - 1].productPrice).to.equal(product.productPrice);
+            expect(addedProduct.productCode).to.equal(product.productCode);
+            expect(addedProduct.factoryID).to.equal(product.factoryID);
+            expect(addedProduct.productPrice).to.equal(product.productPrice);
         });
     });
 
 });
 
+//TODO: REFACTORIZAR ESTA PRUEBA YA QUE ESTA MUY DEPENDIENTE DE LA PRUEBA ANTERIOR
 describe('Delete Product', () => {
-    const tests = 'L001-001';
-    const testBD = Object.create(products);
-    // console.log('Delete Product, testBD.length: ', testBD.length);
+    const tests = 'L001-007';
+    const productsList = getProducts();
 
     it(`should delete the product ${tests}`, () => {
         //TODO: se esta modificando la base de datos testBD por lo que no es necesario este paso intermedio
-        const productsList = deleteProduct(tests);
+        const deletedProduct = deleteProduct(tests);
         // console.log('Delete Product 2, testBD.length: ', testBD.length);
-        expect(productsList.length).to.equal(2);
+        expect(productsList.length).to.equal(productsList.length - 1);
         productsList.forEach(element => {
-            expect(element.productCode).to.not.equal(tests);
+            expect(element.productCode).to.not.equal(deletedProduct.productCode);
         });
     });
 
 
 });
 
-describe('Update Product', () => {
+describe.skip('Update Product', () => {
     const tests = [
         {
             productCode: 'L001-001',
@@ -153,19 +158,19 @@ describe('Update Product', () => {
             },
         },
     ];
-    const testBD = Object.create(products);
+    const productsList = getProducts();
 
     tests.forEach((testCase, index) => {
         it('Should update the product', () => {
             const updatedProduct = updateProduct(testCase);
-            expect(testBD[index].productCode).to.equal(updatedProduct.productCode);
-            expect(testBD[index].factoryID).to.equal(updatedProduct.factoryID);
-            expect(testBD[index].batchCode).to.equal(updatedProduct.batchCode);
-            expect(testBD[index].client).to.equal(updatedProduct.client);
-            expect(testBD[index].productPrice).to.equal(updatedProduct.productPrice);
-            expect(testBD[index].productSaleDate).to.equal(updatedProduct.productSaleDate);
-            expect(testBD[index].realProductPrice).to.equal(updatedProduct.realProductPrice);
-            expect(testBD[index].realClient).to.equal(updatedProduct.realClient);
+            expect(productsList[index].productCode).to.equal(updatedProduct.productCode);
+            expect(productsList[index].factoryID).to.equal(updatedProduct.factoryID);
+            expect(productsList[index].batchCode).to.equal(updatedProduct.batchCode);
+            expect(productsList[index].client).to.equal(updatedProduct.client);
+            expect(productsList[index].productPrice).to.equal(updatedProduct.productPrice);
+            expect(productsList[index].productSaleDate).to.equal(updatedProduct.productSaleDate);
+            expect(productsList[index].realProductPrice).to.equal(updatedProduct.realProductPrice);
+            expect(productsList[index].realClient).to.equal(updatedProduct.realClient);
         });
 
     });

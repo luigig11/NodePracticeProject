@@ -1,3 +1,4 @@
+//ESTE ARCHIVO NO TIENE UTILIDAD. SE ESTUDIARA SU UTILIDAD PARA SEMBRAR DATOS DE PRUEBAS UNITARIAS EN UN FUTURO
 import { Batch } from '../interfaces/batch';
 import { Product } from '../interfaces/product';
 

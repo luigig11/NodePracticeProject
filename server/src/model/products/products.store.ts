@@ -10,12 +10,13 @@ function getList(): Product[] {
     return dummyProducts;
 }
 
-function add(product: Product): Product[] {
+function add(product: Product): Product {
     const newProduct: Product = {
         ...product
     }
     dummyProducts.push(newProduct);
-    return dummyProducts;
+    //TODO: componer esto para 
+    return dummyProducts[dummyProducts.length - 1];
 }
 
 function eliminate (code: string ): Product {
