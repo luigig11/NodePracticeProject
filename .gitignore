@@ -1,4 +1,4 @@
 node_modules
 */node_modules
 logs
-server/src/specs
+server/src/specs/

@@ -2,7 +2,7 @@ import {expect} from 'chai';
 
 // EL ARCHIVO "data.fixture" NO TIENE NINGUNA UTILIDAD. SE ESTUDIARA A FUTURO SI ES VIABLE USARLO PARA SEMBRAR DATOS DE PRUEBAS UNITARIAS
 // import { batches } from '../fixtures/data.fixture';
-import {batches as dummyBatches} from '../store/dummyStore';
+import {batches as dummyBatches} from '../store/dummyStored';
 
 import { addBatch, deleteBatch, getBatch, getBatches, updateBatch } from '../model/batches/batches.model';
 
