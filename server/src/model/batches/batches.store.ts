@@ -33,7 +33,7 @@ function update(batch: Batch): Batch {
         return undefined;
     } */
     //encontrar el indice del batch
-    let batchIndex: number = dummyBatches.findIndex(memoryBatch => memoryBatch.batchCode === memoryBatch.batchCode);
+    let batchIndex: number = dummyBatches.findIndex(memoryBatch => memoryBatch.batchCode === batch.batchCode);
     //actualizar el batch
     dummyBatches[batchIndex] = {
         ...dummyBatches[batchIndex],

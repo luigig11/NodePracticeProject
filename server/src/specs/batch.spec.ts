@@ -1,3 +1,7 @@
+/**
+ * EL ARCHIVO DE PRUEBAS UNITARIAS PODRIA SER MEJORADO CON LA LIBRERIA SINON.JS
+ */
+
 import {expect} from 'chai';
 
 // EL ARCHIVO "data.fixture" NO TIENE NINGUNA UTILIDAD. SE ESTUDIARA A FUTURO SI ES VIABLE USARLO PARA SEMBRAR DATOS DE PRUEBAS UNITARIAS
@@ -29,20 +33,11 @@ describe('Get Batch', () => {
 });
 
 describe('Get Batches', () => {
-    const test = ['LT-001', 'LT-002', 'LT-003', 'LT-004'];
-    const testBD = getBatches();
 
     it('should be an array of four elements', () => {
         //TODO: este caso es medio sin sentido porque todo lo que hago es retornar la BD 
         //Mejorar si se puede o eliminarlo
-        expect(testBD).to.be.an('array');
-        expect(testBD.length).to.equal(4);
-    });
-    
-    test.forEach((batch, index) => {
-        it(`should have batch Code equal to ${batch}`, () => {
-            expect(testBD[index].batchCode).to.equal(batch);
-        });
+        expect(getBatches()).to.be.an('array');
     });
 
 });
@@ -67,30 +62,24 @@ describe('Add Batches', () => {
             amountProducts: 10,
         },
     ]
-    const testBD = [...dummyBatches];
 
     tests.forEach(batch => {
         it('should add a new product', () => {
-            addBatch(batch);
-            expect(testBD[testBD.length - 1].batchCode).to.equal(batch.batchCode);
-            expect(testBD[testBD.length - 1].amountProducts).to.equal(batch.amountProducts);
-            expect(testBD[testBD.length - 1].batchDateStart).to.equal(batch.batchDateStart);
-            expect(testBD[testBD.length - 1].batchDateEnd).to.equal(batch.batchDateEnd);
+            const addedBatch = addBatch(batch);
+            expect(addedBatch).to.exist;
+            expect(getBatch(addedBatch.batchCode)).to.exist;
         });        
     });
 });
 
 describe('Delete Batch', () => {
     const tests = 'LT-004';
-    const testBD = [...dummyBatches];
 
     it(`should delete the batch ${tests}`, () => {
         //TODO: cuando se cambie a pure function se cambia este tests
-        deleteBatch(tests);
-        expect(dummyBatches.length).to.equal(testBD.length - 1);
-        dummyBatches.forEach(element => {
-            expect(element.batchCode).to.not.equal(tests);
-        });
+        const deletedBatch = deleteBatch(tests);
+        expect(deletedBatch).to.not.be.undefined;
+        expect(getBatch(deletedBatch.batchCode)).to.be.undefined;
     });
 });
 
@@ -114,15 +103,14 @@ describe('Update Batch', () => {
             batchDateStart: new Date('25/05/2022')
         },
     ];
-    const testBD = [...dummyBatches];
 
     tests.forEach((batch, index) => {
         it(`Should update the product ${batch.batchCode}`, () => {
             const newBatch = updateBatch(batch);
-            expect(newBatch?.batchCode).to.equal(testBD[index].batchCode);
-            expect(newBatch?.amountProducts).to.equal(testBD[index].amountProducts);
-            expect(newBatch?.batchDateStart).to.equal(testBD[index].batchDateStart);
-            expect(newBatch?.batchDateEnd).to.equal(testBD[index].batchDateEnd);
+            expect(dummyBatches[index].batchCode).to.equal(newBatch?.batchCode);
+            expect(dummyBatches[index].amountProducts).to.equal(newBatch?.amountProducts);
+            expect(dummyBatches[index].batchDateStart).to.equal(newBatch?.batchDateStart);
+            expect(dummyBatches[index].batchDateEnd).to.equal(newBatch?.batchDateEnd);
         });
     });
 

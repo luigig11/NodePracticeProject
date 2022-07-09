@@ -1,3 +1,7 @@
+/**
+ * EL ARCHIVO DE PRUEBAS UNITARIAS PODRIA SER MEJORADO CON LA LIBRERIA SINON.JS
+ */
+
 import { expect } from 'chai';
 
 import {
@@ -9,18 +13,21 @@ import {
 } from '../model/products/products.model';
 
 // EL ARCHIVO "data.fixture" NO TIENE NINGUNA UTILIDAD. SE ESTUDIARA A FUTURO SI ES VIABLE USARLO PARA SEMBRAR DATOS DE PRUEBAS UNITARIAS
-// import { products } from '../fixtures/data.fixture'
+// import { products as dataProducts } from '../fixtures/data.fixture'
 import {products as dummyProducts} from '../store/dummyStore';
 
 describe('Get product', () => {
 
-    const tests: string[] = ['L001-001', 'L001-004', 'L001-005'];
+    const tests: string[] = ['L001-001', 'L001-004', 'L001-005']
 
     tests.forEach((item, index) => {
 
         if (index === 0) {
             it(`Should find the product ${item}`, () => {
-                expect(getProduct(item)).to.exist;
+                const product = getProduct(item);
+                console.log('Product: ', product);
+                expect(product).to.exist;
+                expect(product!.productCode).to.equal('L001-001');
             });
         } else {
             it(`should not find the product ${item}`, () => {
@@ -33,21 +40,13 @@ describe('Get product', () => {
 
 describe('Get products', () => {
 
-    const tests = ['L001-001', 'L001-002', 'L001-003'];
-    const testBD = Object.create(dummyProducts);
+    // const tests = ['L001-001', 'L001-002', 'L001-003'];
+    // const testBD = Object.create(dummyProducts);
 
     it('Should return a list of products', () => {
-        expect(getProducts()).to.be.an('array');
-    });
-
-    it(`Should return a list of ${testBD.length}`, () => {
-        expect(getProducts().length).to.be.equal(3);
-    });
-
-    tests.forEach((item, index) => {
-        it(`should have the id ${item}`, () => {
-            expect(getProducts()[index].productCode).to.be.equal(item);
-        });
+        const products = getProducts();
+        expect(products).to.exist;
+        expect(products).to.be.an('array');
     });
 
 });
@@ -102,11 +101,8 @@ describe('Add Products', () => {
         it('should add a new product', () => {
             //TODO: se esta modificando la base de datos testBD por lo que no es necesario este paso intermedio
             const addedProduct = addProduct(product);
-            // console.log('Add Product , testBD.length: ', testBD.length);
-            // console.log('Add Product 2, products.length: ', products.length);
-            expect(addedProduct.productCode).to.equal(product.productCode);
-            expect(addedProduct.factoryID).to.equal(product.factoryID);
-            expect(addedProduct.productPrice).to.equal(product.productPrice);
+            expect(addedProduct).to.exist;
+            expect(getProduct(addedProduct.productCode)).to.exist;
         });
     });
 
@@ -114,23 +110,17 @@ describe('Add Products', () => {
 
 //TODO: REFACTORIZAR ESTA PRUEBA YA QUE ESTA MUY DEPENDIENTE DE LA PRUEBA ANTERIOR
 describe('Delete Product', () => {
-    const tests = 'L001-007';
-    const productsList = getProducts();
+    const tests = 'L001-003';
 
     it(`should delete the product ${tests}`, () => {
         //TODO: se esta modificando la base de datos testBD por lo que no es necesario este paso intermedio
         const deletedProduct = deleteProduct(tests);
         // console.log('Delete Product 2, testBD.length: ', testBD.length);
-        expect(productsList.length).to.equal(productsList.length - 1);
-        productsList.forEach(element => {
-            expect(element.productCode).to.not.equal(deletedProduct.productCode);
-        });
+        expect(getProduct(deletedProduct?.productCode)).to.be.undefined;
     });
-
-
 });
 
-describe.skip('Update Product', () => {
+describe('Update Product', () => {
     const tests = [
         {
             productCode: 'L001-001',
@@ -158,19 +148,19 @@ describe.skip('Update Product', () => {
             },
         },
     ];
-    const productsList = getProducts();
+    // const productsList = getProducts();
 
     tests.forEach((testCase, index) => {
         it('Should update the product', () => {
             const updatedProduct = updateProduct(testCase);
-            expect(productsList[index].productCode).to.equal(updatedProduct.productCode);
-            expect(productsList[index].factoryID).to.equal(updatedProduct.factoryID);
-            expect(productsList[index].batchCode).to.equal(updatedProduct.batchCode);
-            expect(productsList[index].client).to.equal(updatedProduct.client);
-            expect(productsList[index].productPrice).to.equal(updatedProduct.productPrice);
-            expect(productsList[index].productSaleDate).to.equal(updatedProduct.productSaleDate);
-            expect(productsList[index].realProductPrice).to.equal(updatedProduct.realProductPrice);
-            expect(productsList[index].realClient).to.equal(updatedProduct.realClient);
+            expect(dummyProducts[index].productCode).to.equal(updatedProduct.productCode);
+            expect(dummyProducts[index].factoryID).to.equal(updatedProduct.factoryID);
+            expect(dummyProducts[index].batchCode).to.equal(updatedProduct.batchCode);
+            expect(dummyProducts[index].client).to.equal(updatedProduct.client);
+            expect(dummyProducts[index].productPrice).to.equal(updatedProduct.productPrice);
+            expect(dummyProducts[index].productSaleDate).to.equal(updatedProduct.productSaleDate);
+            expect(dummyProducts[index].realProductPrice).to.equal(updatedProduct.realProductPrice);
+            expect(dummyProducts[index].realClient).to.equal(updatedProduct.realClient);
         });
 
     });
