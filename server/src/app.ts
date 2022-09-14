@@ -1,9 +1,9 @@
-import express from 'express';
+import express, {Express} from 'express';
 
 import {api} from './routes/api';
 import {httpLogger} from './httpLogger';
 
-const app = express();
+const app: Express = express();
 
 //TODO: ADD CORS MIDDLEWARE
 

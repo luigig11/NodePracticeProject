@@ -1,6 +1,7 @@
 import { Product } from '../../interfaces/product';
 import { logger } from '../../logger';
 import { Sucess, Error } from '../../network/response';
+import {Request, Response} from 'express'
 
 import { 
     getProduct, 
@@ -10,7 +11,7 @@ import {
     updateProduct 
 } from '../../model/products/products.model';
 
-function httpGetProduct(req: any, res: any) {
+function httpGetProduct(req: Request, res: Response) {
     try {
 
         logger.debug(`Initiating operation at ${req.url} route`);
@@ -25,7 +26,7 @@ function httpGetProduct(req: any, res: any) {
 
 }
 
-function httpGetProducts(req: any, res: any) {
+function httpGetProducts(req: Request, res: Response) {
     try {
         
         logger.debug(`Initiating operation at ${req.url} route`);
@@ -40,7 +41,7 @@ function httpGetProducts(req: any, res: any) {
 
 }
 
-function httpAddProduct(req: any, res: any) {
+function httpAddProduct(req: Request, res: Response) {
 
     try {
 
@@ -58,7 +59,7 @@ function httpAddProduct(req: any, res: any) {
 
 }
 
-function httpDeletProduct(req: any, res: any) {
+function httpDeletProduct(req: Request, res: Response) {
 
     try {
 
@@ -75,7 +76,7 @@ function httpDeletProduct(req: any, res: any) {
 
 }
 
-function httpUpdateProduct(req: any, res: any) {
+function httpUpdateProduct(req: Request, res: Response) {
 
     try {
 

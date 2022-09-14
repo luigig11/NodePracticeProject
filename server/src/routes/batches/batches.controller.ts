@@ -1,3 +1,5 @@
+import {Request, Response} from 'express';
+
 import { Batch } from '../../interfaces/batch';
 import { logger } from '../../logger';
 import { Error, Sucess } from '../../network/response';
@@ -10,7 +12,7 @@ import {
     updateBatch
 } from '../../model/batches/batches.model';
 
-function httpGetBatches(req: any, res: any): any {
+function httpGetBatches(req: Request, res: Response): any {
 
     try {
 
@@ -27,7 +29,7 @@ function httpGetBatches(req: any, res: any): any {
 
 }
 
-function httpGetBatch(req: any, res: any): any {
+function httpGetBatch(req: Request, res: Response): any {
 
     try {
 
@@ -43,7 +45,7 @@ function httpGetBatch(req: any, res: any): any {
 
 }
 
-function httpAddBatch(req: any, res: any): any {
+function httpAddBatch(req: Request, res: Response): any {
 
     try {
 
@@ -58,7 +60,7 @@ function httpAddBatch(req: any, res: any): any {
     
 }
 
-function httpDeleteBatch(req: any, res: any) {
+function httpDeleteBatch(req: Request, res: Response) {
 
     try {
 
@@ -75,7 +77,7 @@ function httpDeleteBatch(req: any, res: any) {
     
 }
 
-function httpUpdateBatch(req: any, res: any) {
+function httpUpdateBatch(req: Request, res: Response) {
 
     try {
 
