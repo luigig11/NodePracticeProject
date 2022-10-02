@@ -5,34 +5,35 @@ import { Product } from './Product';
 @Entity({name: "Batch"})
 export class Batch {
     @PrimaryGeneratedColumn({name: 'batchid', type: 'bigint'})
-    batchid: number;
+    batchid!: number;
 
     @Column('varchar', {
         name: 'batchCode',
         length: 20,
-        nullable: false
+        nullable: false,
+        unique: true
     })
     @Length(1, 20)
-    batchCode: string;
+    batchCode!: string;
 
     @Column('int', {
         name: 'amountProducts',
         nullable: false
     })
-    amountProducts: number;
+    amountProducts!: number;
 
     @Column('timestamp', {
         name: 'batchDateStart',
         nullable: true
     })
-    batchDateStart: Date;
+    batchDateStart?: Date;
 
     @Column('timestamp', {
         name: 'batchDateEnd',
         nullable: true
     })
-    batchDateEnd: Date;
+    batchDateEnd?: Date;
 
     @OneToMany(() => Product, (product) => product.batch)
-    products: Product[]
+    products!: Product[]
 }

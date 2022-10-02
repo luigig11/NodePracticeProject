@@ -11,11 +11,13 @@ import {
     updateProduct 
 } from '../../model/products/products.model';
 
-function httpGetProduct(req: Request, res: Response) {
+//TODO: APLICAR EL ERROR HANDLING, TAMBIEN EL EL ARCHIVO STORE DE
+
+async function httpGetProduct(req: Request, res: Response) {
     try {
 
         logger.debug(`Initiating operation at ${req.url} route`);
-        const product: Product | undefined = getProduct(req.params.productCode);
+        const product: Product | null = await getProduct(req.params.productCode);
         if (!product) return Error(req, res, 'Product not found');
         return Sucess(req, res, product, 200);
 
@@ -26,11 +28,11 @@ function httpGetProduct(req: Request, res: Response) {
 
 }
 
-function httpGetProducts(req: Request, res: Response) {
+async function httpGetProducts(req: Request, res: Response) {
     try {
         
         logger.debug(`Initiating operation at ${req.url} route`);
-        const products: Product[] = getProducts();
+        const products: Product[] = await getProducts();
         if(!products) return Error(req, res, 'No products were found');
         return Sucess(req, res, products, 200);
 
@@ -41,7 +43,7 @@ function httpGetProducts(req: Request, res: Response) {
 
 }
 
-function httpAddProduct(req: Request, res: Response) {
+async function httpAddProduct(req: Request, res: Response) {
 
     try {
 
@@ -49,7 +51,7 @@ function httpAddProduct(req: Request, res: Response) {
         //antes de mandar la peticion al backend
         //TODO: esta URL solo imprime el parametro final (ej: /L001-002) componet para que imprima el formato correcto
         logger.debug(`Initiating operation at ${req.url} route`);
-        const newProduct: Product = addProduct(req.body);
+        const newProduct: Product = await addProduct(req.body);
         return Sucess(req, res, newProduct, 200);
 
     } catch (error) {
@@ -59,14 +61,13 @@ function httpAddProduct(req: Request, res: Response) {
 
 }
 
-function httpDeletProduct(req: Request, res: Response) {
+async function httpDeletProduct(req: Request, res: Response) {
 
     try {
 
         logger.debug(`Initiating operation at ${req.url} route`);
-        if (!getProduct(req.params.productCode)) 
-            return Error(req, res, 'Product not found');
-        const products: Product = deleteProduct(req.params.productCode);
+        const products: Product | null = await deleteProduct(req.params.productCode);
+        if (!products) return Error(req, res, 'Product not found'); 
         return Sucess(req, res, products, 200);
 
     } catch (error) {
@@ -76,14 +77,13 @@ function httpDeletProduct(req: Request, res: Response) {
 
 }
 
-function httpUpdateProduct(req: Request, res: Response) {
+async function httpUpdateProduct(req: Request, res: Response) {
 
     try {
 
         logger.debug(`Initiating operation at ${req.url} route`);
-        if (!getProduct(req.body.productCode)) 
-            return Error(req, res, 'Product not found');
-        const product: Product = updateProduct(req.body)!;
+        const product: Product | null = await updateProduct(req.body);
+        if (!product) return Error(req, res, 'Product not found');
         return Sucess(req, res, product, 200);
 
     } catch (error) {

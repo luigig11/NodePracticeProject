@@ -6,25 +6,46 @@ import { PreSale } from './PreSale';
 @Entity({name: 'Sale'})
 export class Sale {
 
-    @PrimaryGeneratedColumn({name: 'saleId', type: 'bigint'})
-    saleId: number;
+    @PrimaryGeneratedColumn({ name: 'saleId', type: 'bigint' })
+    saleId!: number;
 
     @Column('float', {
-        name: 'salePrice',
+        name: 'salePriceDollar',
         nullable: false
     })
-    salePrice: number;
+    salePriceDollar!: number;
+
+    @Column('float', {
+        name: 'salePriceCordoba',
+        nullable: false
+    })
+    salePriceCordoba!: number;
+
+    @Column('timestamp', {
+        name: 'saleDate',
+        nullable: true
+    })
+    saleDate?: Date;
+
+    @Column({name: 'productId'})
+    productId!: number;
+
+    @Column({name: 'clientId'})
+    clientId!: number;
+
+    @Column({name: 'presaleId'})
+    presaleId!: number;
 
     @OneToOne(() => Product, (product) => product.sale)
-    @JoinColumn()
-    product: Product;
+    @JoinColumn({name: 'productId'})
+    product!: Product;
 
     @OneToOne(() => Client, (client) => client.sale)
-    @JoinColumn()
-    client: Client;
+    @JoinColumn({name: 'clientId'})
+    client!: Client;
 
     @OneToOne(() => PreSale, (preSale) => preSale.sale)
-    @JoinColumn()
-    preSale: PreSale;
+    @JoinColumn({name: 'presaleId'})
+    preSale!: PreSale;
 
 }

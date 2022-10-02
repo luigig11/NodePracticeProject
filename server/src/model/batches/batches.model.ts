@@ -7,24 +7,24 @@ import {
     update,
 } from './batches.store';
 
-function getBatches(): Batch[] {
-    return getList();
+async function getBatches(): Promise<Batch[]> {
+    return await getList();
 }
 
-function getBatch(code: string): Batch | undefined {
-    return get(code);
+async function getBatch(code: string): Promise<Batch | null> {
+    return await get(code);
 }
 
-function addBatch(newBatch: Batch): Batch {
-    return add(newBatch);
+async function addBatch(newBatch: Batch): Promise<Batch> {
+    return await add(newBatch);
 }
 
-function deleteBatch(code: string): Batch {
-    return eliminate(code);
+async function deleteBatch(code: string): Promise<Batch | null> {
+    return await eliminate(code);
 }
 
-function updateBatch(batch: Batch,): Batch | undefined {
-    return update(batch)
+async function updateBatch(batch: Batch,): Promise<Batch | null> {
+    return await update(batch)
 }
 
 export {

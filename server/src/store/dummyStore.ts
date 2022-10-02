@@ -15,7 +15,7 @@ const products: Product[] = [
         productCode: 'L001-001',
         factoryID: 'SW00001',
         productPrice: {
-            cordova: 500,
+            cordoba: 500,
             dollar: 20
         },
     },
@@ -24,7 +24,7 @@ const products: Product[] = [
         productCode: 'L001-002',
         factoryID: 'SW00002',
         productPrice: {
-            cordova: 500,
+            cordoba: 500,
             dollar: 20
         },
     },
@@ -33,7 +33,7 @@ const products: Product[] = [
         productCode: 'L001-003',
         factoryID: 'SW00003',
         productPrice: {
-            cordova: 500,
+            cordoba: 500,
             dollar: 20
         },
     }

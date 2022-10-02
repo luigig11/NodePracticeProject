@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn} from 'typeorm';
 import {Length} from 'class-validator';
 import { Batch } from './Batch';
 import { Sale } from './Sale';
@@ -8,15 +8,16 @@ import { PreSale } from './PreSale';
 export class Product {
 
     @PrimaryGeneratedColumn({name: 'productId', type: 'bigint'})
-    productId: number;
+    productId!: number;
 
     @Column('varchar', {
         name: 'productCode',
         length: 20,
-        nullable: false
+        nullable: false,
+        unique: true
     })
     @Length(1, 20)
-    productCode: string;
+    productCode!: string;
 
     @Column('varchar', {
         name: 'factoryId',
@@ -24,27 +25,32 @@ export class Product {
         nullable: false
     })
     @Length(1, 20)
-    factoryId: string;
+    factoryId!: string;
 
     @Column('float', {
         name: 'dollarPrice',
         nullable: false
     })
-    dollarPrice: number;
+    dollarPrice!: number;
 
     @Column('float', {
         name: 'cordobaPrice',
         nullable: false
     })
-    cordobaPrice: number;
+    cordobaPrice!: number;
+
+    //Verificar si puedo borrar este archivo ya que usando el .find({relations: <relation>: true}) puedo popular el campo de la relacion
+    @Column({name: 'batchid'})
+    batchid!: number;
 
     @ManyToOne(() => Batch, (batch) => batch.products)
-    batch: Batch;
+    @JoinColumn({name: 'batchid'})
+    batch!: Batch;
 
     @OneToOne(() => Sale, (sale) => sale.product)
-    sale: Sale;
+    sale!: Sale;
 
     @OneToOne(() => PreSale, (preSale) => preSale.product)
-    preSale: PreSale;
+    preSale!: PreSale;
 
 }

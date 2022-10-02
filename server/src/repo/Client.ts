@@ -7,7 +7,7 @@ import { PreSale } from './PreSale';
 export class Client {
     
     @PrimaryGeneratedColumn({name: 'clientId', type: 'bigint'})
-    clientId: number;
+    clientId!: number;
 
     @Column('varchar', {
         name: 'clientName',
@@ -15,7 +15,7 @@ export class Client {
         nullable: false
     })
     @Length(1, 20)
-    clientName: string;
+    clientName!: string;
 
     @Column('varchar', {
         name: 'clientLastName',
@@ -23,12 +23,12 @@ export class Client {
         nullable: false
     })
     @Length(1, 20)
-    clientLastName: string;
+    clientLastName!: string;
 
     @OneToOne(() => Sale, (sale) => sale.client)
-    sale: Sale;
+    sale!: Sale;
 
     @OneToOne(() => PreSale, (PreSale) => PreSale.client)
-    preSale: PreSale;
+    preSale!: PreSale;
 
 }

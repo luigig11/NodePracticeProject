@@ -1,15 +1,15 @@
 interface Coin {
     dollar: number;
-    cordova: number;
+    cordoba: number;
 }
 
 export interface Product {
     productCode: string;
     factoryID: string;
     batchCode?: string;
-    client?: string;
+    // client?: string;
     productPrice: Coin;
-    productSaleDate?: Date;
-    realProductPrice?: Coin;
-    realClient?: string; 
+    //productSaleDate?: Date;
+    //realProductPrice?: Coin;
+    // realClient?: string; 
 }

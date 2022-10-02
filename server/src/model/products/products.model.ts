@@ -7,25 +7,25 @@ import {
     update
 } from '../../model/products/products.store'
 
-function getProduct(code:string): Product | undefined {
-    return get(code);
+async function getProduct(code:string): Promise<Product | null> {
+    return await get(code);
 }
 
-function getProducts(): Product[] {
-    return getList();
+async function getProducts(): Promise<Product[]> {
+    return await getList();
 }
 
-function addProduct(product: Product): Product {
-    return add(product);
+async function addProduct(product: Product): Promise<Product> {
+    return await add(product);
 }
 
-function deleteProduct(code: string): Product {
-    return eliminate(code);
+async function deleteProduct(code: string): Promise<Product | null> {
+    return await eliminate(code);
 }
 
-function updateProduct(product: Product): Product {
+async function updateProduct(product: Product): Promise<Product | null> {
     //NOTA: estoy considerando que el controlador verifica si existe o no el producto
-    return update(product);
+    return await update(product);
 }
 
 export {
