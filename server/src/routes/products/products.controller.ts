@@ -11,6 +11,9 @@ import {
     updateProduct 
 } from '../../model/products/products.model';
 
+import {getPagination} from '../../store/query';
+import { paginationPArameters } from '../../interfaces/pagination';
+
 //TODO: APLICAR EL ERROR HANDLING, TAMBIEN EL EL ARCHIVO STORE DE
 
 async function httpGetProduct(req: Request, res: Response) {
@@ -32,7 +35,9 @@ async function httpGetProducts(req: Request, res: Response) {
     try {
         
         logger.debug(`Initiating operation at ${req.url} route`);
-        const products: Product[] = await getProducts();
+        const {page, limit} = req.query;
+        const {skip, take} = getPagination({page, limit} as paginationPArameters);
+        const products: Product[] = await getProducts(skip, take);
         if(!products) return Error(req, res, 'No products were found');
         return Sucess(req, res, products, 200);
 
