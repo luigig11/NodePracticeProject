@@ -1,5 +1,6 @@
 import "reflect-metadata";
-import {createServer} from 'http';
+import {readFileSync} from 'fs';
+import {createServer} from 'https'
 import {AppDataSource} from './store/data-source';
 
 //como usar dotenv con 'import': https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
@@ -13,7 +14,11 @@ import app from './app';
 
 const PORT = process.env.PORT || 3000;
 
-const server = createServer(app);
+const options = {
+    key: readFileSync('key.pem'),
+    cert: readFileSync('cert.pem')
+}
+const server = createServer(options, app)
 
 //TODO: crear funcion main y dejar dentro de ella la conexion a la BD asi como levantar el event listener del server, esto para garantizar
 //que el server no escuche requests hasta que la BD este inicializada
