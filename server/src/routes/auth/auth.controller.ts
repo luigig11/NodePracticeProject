@@ -43,8 +43,10 @@ export function failure(req: Request, res: Response) {
     return Error(req, res, '', 'Failed to login', 401)
 }
 
-export function checLoggedIn(req: Request, res: Response, next: NextFunction) {
-    const isLoggedIn = true;
+export function checkLoggedIn(req: Request, res: Response, next: NextFunction) {
+    console.log('Current user is: ', req.user);
+    
+    const isLoggedIn = req.isAuthenticated() && req.user;
 
     if (!isLoggedIn) {
         return Error(
@@ -57,5 +59,12 @@ export function checLoggedIn(req: Request, res: Response, next: NextFunction) {
     }
 
     next();
+}
+
+export function logOut(req: any, res: any) {
+
+    //esta es la funcion logout de passport, por eso no uso el type Request para definir el parametro req
+    req.logout();
+    res.redirect('/auth/google');
 }
 
