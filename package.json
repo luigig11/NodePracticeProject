@@ -8,7 +8,8 @@
     "install": "npm run install-server",
     "server": "npm run start --prefix server",
     "watch": "",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-server": "npm run build-ts --prefix server"
   },
   "keywords": [],
   "author": "",
