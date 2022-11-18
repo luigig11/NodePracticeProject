@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "install-server": "npm install --prefix server",
+    "install-server": "npm install --legacy-peer-deps  --prefix server",
     "install": "npm run install-server",
     "server": "npm run start --prefix server",
     "watch": "",
