@@ -15,7 +15,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "afrodita": "file:..",
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.13.2",
     "cookie-session": "^2.0.0",
